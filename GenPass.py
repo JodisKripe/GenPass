@@ -13,6 +13,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--backdateyear", "-by", help="Back Dates Years upto 'n' years. eg: if n=2 and current year is 2023, the tool will consider years 2021,2022 and 2023")
 parser.add_argument("--backdateseason", "-bs", help="Back Dates Seasons upto 3 seasons. eg: if value is 2 and current season is Winter, the tool will consider seasons Summer, Fall and Winter.\nNote: This also accounts for the change in years with seasons as well.")
+parser.add_argument("--essentials","-e",help="Adds the passwords from the wordlists/essentials to the stdout",action="store_true")
 args = parser.parse_args()
 
 allSeasons = ["Winter","Spring","Summer","Fall"]
@@ -25,6 +26,7 @@ today = datetime.date.today()
 currentYear = today.year
 currentMonth = today.strftime("%b")    
 currentSeason=""   
+extras=[]
 #print(today.month)
 Years.append(currentYear)
 Months.append(currentMonth)
@@ -61,6 +63,12 @@ def flags():
             else:
                 ind=ind-1
             Seasons.append(allSeasons[ind])
+    if(args.essentials):
+        with open("./wordlists/essentials.txt") as file:
+            temp= file.readlines()
+            for i in temp:
+                extras.append(i.strip())
+
 
 def generateList():
     for i in Seasons:
@@ -70,6 +78,10 @@ def generateList():
                 print(genpass1)
                 genpass2 = i + str(j)[-2:] + k
                 print(genpass2)
+                genpass3 = i + str(j) + k
+                print(genpass3)
+    for i in extras:
+        print(i)
 
 
 if(__name__=="__main__"):
