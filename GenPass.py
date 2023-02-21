@@ -49,7 +49,7 @@ elif(today.month in [9,10,11]):
     currentSeason="Fall"
 
 def flags():
-    print(args)
+    #print(args)
     if(args.backdateyear):
         for i in range(1,int(args.backdateyear)+1):
             Years.append(int(currentYear)-i)
